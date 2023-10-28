@@ -1,0 +1,3 @@
+rootProject.name = "DevFestHH"
+
+include("samples", "spring-demo")
