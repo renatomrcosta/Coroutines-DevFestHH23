@@ -1,0 +1,14 @@
+@startuml
+
+
+service -> "User Service" : Fetch user information (userId)
+service <-- "User Service" : response
+
+service -> "Purchase History Service" : fetch purchase history (userId)
+service <-- "Purchase History Service" : response
+
+Database db as "Compiled Report Database"
+service -> db : Compile report and save to DB
+
+
+@enduml
