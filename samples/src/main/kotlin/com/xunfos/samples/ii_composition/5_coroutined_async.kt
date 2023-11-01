@@ -26,7 +26,7 @@ private suspend fun compileUserPurchaseReport(userDetails: Any, purchaseHistory:
 suspend fun main() = withExecutionTime {
     trace("Compiling report")
     withContext(context = Dispatchers.IO) {
-        val userId = "d5e56c55-a2d9-4672-ab3a-f52dd268ce09" // Arbitrary userId
+        val userId = "d5e56c55-a2d9-4672-ab3a-f52dd268ce09"
 
         val userDetailsDeferred: Deferred<String> =
             async { fetchUserDetails(userId = userId) }
