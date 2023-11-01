@@ -23,20 +23,10 @@ fun main(args: Array<String>) {
 
 @RestController
 @RequestMapping("/user")
-class MyController(private val userRepository: UserRepository) {
-    init {
-        println("Initializing Users")
-        (1..20).forEach {
-            userRepository.save(
-                UserDocument(
-                    id = "$it",
-                    name = "Name $it",
-                    score = Random.nextInt(0, 100)
-                )
-            ).block()
-        }
-    }
-
+class MyController(
+    private val userRepository: UserRepository,
+    private val userPurchaseHistoryService: UserPurchaseHistoryService
+) {
     @GetMapping("/")
     fun listUsers(): Flux<UserDocument> {
         return userRepository.findAll()
@@ -45,6 +35,12 @@ class MyController(private val userRepository: UserRepository) {
     @GetMapping("/{id}")
     fun getUser(@PathVariable id: String): Mono<UserDocument> {
         return userRepository.findById(id)
+    }
+
+    @GetMapping("/{id}/history")
+    fun getUserPurchaseHistory(@PathVariable id: String): Flux<PurchaseHistory> {
+        val history = userPurchaseHistoryService.getHistory(userId = id)
+        return history
     }
 
     @GetMapping("/name")
@@ -58,10 +54,22 @@ class MyController(private val userRepository: UserRepository) {
     }
 }
 
+data class PurchaseHistory(val id: String, val price: Int)
+
 @Document
 data class UserDocument(val id: String, val name: String, val score: Int)
 
 interface UserRepository : ReactiveCrudRepository<UserDocument, String> {
     fun findByName(name: String): Mono<UserDocument>
     fun findAllByScoreGreaterThan(score: Int): Flux<UserDocument>
+}
+
+@Service
+class UserPurchaseHistoryService {
+    fun getHistory(userId: String): Flux<PurchaseHistory> = Flux.fromArray(
+        arrayOf(
+            PurchaseHistory("1", 1),
+            PurchaseHistory("2", 2),
+        )
+    )
 }

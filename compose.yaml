@@ -7,3 +7,5 @@ services:
       - 'MONGO_INITDB_ROOT_USERNAME=root'
     ports:
       - '27017'
+    volumes:
+      - ./devfesthhmongo:/data/devfesthhmongo/db
