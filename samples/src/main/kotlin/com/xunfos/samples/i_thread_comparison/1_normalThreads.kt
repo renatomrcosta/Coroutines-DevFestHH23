@@ -8,7 +8,7 @@ fun main() {
     withExecutionTime {
         // A list with a number of items will spawn.
         // Each item will initialize using the block of code below
-        List(2_000_000) {
+        List(100) {
             thread {
                 Thread.sleep(1000)
                 trace("Executed Thread #$it")

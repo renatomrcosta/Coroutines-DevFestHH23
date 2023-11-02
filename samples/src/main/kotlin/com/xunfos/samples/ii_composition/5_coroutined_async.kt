@@ -10,17 +10,17 @@ import kotlinx.coroutines.withContext
 
 private suspend fun fetchUserDetails(userId: String): String {
     trace("Welcome to my nice function!")
-    delay(100)
+    delay(300)
     return "Imagine some meaningful content we derive based on an User"
 }
 
 private suspend fun fetchUserPurchaseHistory(userId: String): List<Any> {
-    delay(100)
+    delay(300)
     return listOf()
 }
 
 private suspend fun compileUserPurchaseReport(userDetails: Any, purchaseHistory: List<Any>) {
-    delay(100)
+    delay(300)
 }
 
 suspend fun main() = withExecutionTime {

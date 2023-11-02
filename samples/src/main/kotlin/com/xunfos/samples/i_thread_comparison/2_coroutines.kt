@@ -13,7 +13,7 @@ fun main() {
         runBlocking {
             // A list with a number of items will spawn.
             // Each item will initialize using the block of code below
-            List(2_000_000) {
+            List(100) {
                 launch {
                     delay(1000)
                     trace("Executed Job #$it")

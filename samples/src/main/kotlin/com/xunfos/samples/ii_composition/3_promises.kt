@@ -5,19 +5,19 @@ import java.util.concurrent.CompletableFuture
 
 private fun fetchUserDetails(userId: String): CompletableFuture<String> =
     CompletableFuture.supplyAsync {
-        Thread.sleep(100)
+        Thread.sleep(300)
         "Imagine some meaningful content we derive based on an User"
     }
 
 private fun fetchUserPurchaseHistory(userId: String): CompletableFuture<List<Any>> =
     CompletableFuture.supplyAsync {
-        Thread.sleep(100)
+        Thread.sleep(300)
         listOf()
     }
 
 private fun compileUserPurchaseReport(userDetails: Any, purchaseHistory: List<Any>): CompletableFuture<Unit> =
     CompletableFuture.supplyAsync {
-        Thread.sleep(100)
+        Thread.sleep(300)
     }
 
 fun main() = withExecutionTime {

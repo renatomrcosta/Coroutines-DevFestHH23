@@ -3,17 +3,17 @@ package com.xunfos.samples.ii_composition
 import com.xunfos.samples.withExecutionTime
 
 private fun <T> fetchUserDetails(userId: String, onComplete: (String) -> T) {
-    Thread.sleep(100)
+    Thread.sleep(300)
     onComplete("Imagine some meaningful content we derive based on an User")
 }
 
 private fun <T> fetchUserPurchaseHistory(userId: String, onComplete: (List<Any>) -> T) {
-    Thread.sleep(100)
+    Thread.sleep(300)
     onComplete(listOf())
 }
 
 private fun compileUserPurchaseReport(userDetails: Any, purchaseHistory: List<Any>, onComplete: () -> Unit) {
-    Thread.sleep(100)
+    Thread.sleep(300)
     onComplete()
 }
 
