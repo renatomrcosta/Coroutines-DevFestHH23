@@ -1,5 +1,6 @@
 package com.xunfos.springdemo
 
+import io.reactivex.Observable
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import org.springframework.data.mongodb.core.mapping.Document
@@ -12,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
-import kotlin.random.Random
 
 @SpringBootApplication
 class SpringDemoApplication
@@ -39,7 +39,8 @@ class MyController(
 
     @GetMapping("/{id}/history")
     fun getUserPurchaseHistory(@PathVariable id: String): Flux<PurchaseHistory> {
-        val history = userPurchaseHistoryService.getHistory(userId = id)
+        val history = userPurchaseHistoryService.getHistoryReactor(userId = id)
+//        val history2 = userPurchaseHistoryService.getHistoryRxJava(userId = id)
         return history
     }
 
@@ -54,8 +55,6 @@ class MyController(
     }
 }
 
-data class PurchaseHistory(val id: String, val price: Int)
-
 @Document
 data class UserDocument(val id: String, val name: String, val score: Int)
 
@@ -64,12 +63,21 @@ interface UserRepository : ReactiveCrudRepository<UserDocument, String> {
     fun findAllByScoreGreaterThan(score: Int): Flux<UserDocument>
 }
 
+
+data class PurchaseHistory(val id: String, val price: Int)
+
 @Service
 class UserPurchaseHistoryService {
-    fun getHistory(userId: String): Flux<PurchaseHistory> = Flux.fromArray(
-        arrayOf(
-            PurchaseHistory("1", 1),
-            PurchaseHistory("2", 2),
-        )
+    private val history = arrayOf(
+        PurchaseHistory("1", 1),
+        PurchaseHistory("2", 2),
     )
+
+    fun getHistoryReactor(userId: String): Flux<PurchaseHistory> {
+        return Flux.fromArray(history)
+    }
+
+    fun getHistoryRxJava(userId: String): Observable<PurchaseHistory> {
+        return Observable.fromArray(*history)
+    }
 }
