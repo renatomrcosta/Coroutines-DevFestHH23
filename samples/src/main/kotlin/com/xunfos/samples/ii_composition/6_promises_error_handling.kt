@@ -1,8 +1,6 @@
 package com.xunfos.samples.ii_composition
 
-import com.xunfos.samples.trace
 import com.xunfos.samples.withExecutionTime
-import java.lang.RuntimeException
 import java.util.concurrent.CompletableFuture
 
 private fun fetchUserDetails(userId: String): CompletableFuture<String> =
@@ -21,12 +19,12 @@ private fun compileUserPurchaseReport(userDetails: Any, purchaseHistory: List<An
     CompletableFuture.supplyAsync {
         Thread.sleep(100)
         if (purchaseHistory.isEmpty()) {
-            throw RuntimeException("Every user has for sure purchase at least one item!")
+            throw RuntimeException("Every user has for sure purchased at least one item!")
         }
     }
 
 fun main() = withExecutionTime {
-    trace("Compiling report")
+    println("Compiling report")
 
     val userId = "d5e56c55-a2d9-4672-ab3a-f52dd268ce09" // Arbitrary userId
     val userDetailsFuture = fetchUserDetails(userId = userId)
@@ -41,9 +39,9 @@ fun main() = withExecutionTime {
         purchaseHistory = purchaseHistoryFuture.join(),
         userDetails = userDetailsFuture.join()
     ).exceptionally { exception ->
-        trace("I have to log the exception")
-        trace(exception.message)
+        println("I have to log the exception")
+        println(exception.message)
     }.whenComplete { u, t ->
-        trace("compiling user purchase report complete")
+        println("compiling user purchase report complete")
     }.join()
 }

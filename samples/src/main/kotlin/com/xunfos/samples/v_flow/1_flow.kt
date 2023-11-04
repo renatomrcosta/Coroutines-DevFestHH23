@@ -9,7 +9,7 @@ import kotlinx.coroutines.runBlocking
 private fun myFlow(): Flow<Int> = flow {
     println("Flow has started")
     for (i in 1..3) {
-        delay(100)
+        delay(200)
         trace("emitting index $i")
         emit(i)
     }

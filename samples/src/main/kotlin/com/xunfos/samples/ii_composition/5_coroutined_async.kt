@@ -1,6 +1,5 @@
 package com.xunfos.samples.ii_composition
 
-import com.xunfos.samples.trace
 import com.xunfos.samples.withExecutionTime
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
@@ -9,23 +8,22 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 
 private suspend fun fetchUserDetails(userId: String): String {
-    trace("Welcome to my nice function!")
-    delay(300)
+    delay(200)
     return "Imagine some meaningful content we derive based on an User"
 }
 
 private suspend fun fetchUserPurchaseHistory(userId: String): List<Any> {
-    delay(300)
+    delay(200)
     return listOf()
 }
 
 private suspend fun compileUserPurchaseReport(userDetails: Any, purchaseHistory: List<Any>) {
-    delay(300)
+    delay(200)
 }
 
 suspend fun main() = withExecutionTime {
-    trace("Compiling report")
-    withContext(context = Dispatchers.IO) {
+    println("Compiling report")
+    withContext(context = Dispatchers.Default) {
         val userId = "d5e56c55-a2d9-4672-ab3a-f52dd268ce09"
 
         val userDetailsDeferred: Deferred<String> =
@@ -37,7 +35,7 @@ suspend fun main() = withExecutionTime {
             purchaseHistory = purchaseHistoryDeferred.await(),
             userDetails = userDetailsDeferred.await()
         )
-        trace("compiling user purchase report complete")
+        println("compiling user purchase report complete")
     }
 }
 

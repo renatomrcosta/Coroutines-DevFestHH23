@@ -11,8 +11,8 @@ suspend fun main() {
 
     coroutineScope {
         launch {
-            delay(100)
-            launch { delay(300) }
+            delay(200)
+            launch { delay(200) }
             trace("Finished launch")
         }
 
