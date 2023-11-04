@@ -31,7 +31,7 @@ suspend fun calculateBananasForAReallyLongTime(): Int {
 }
 
 private suspend fun calculateApples(): Int {
-    delay(200)
+    delay(300)
     println("Error happened here")
     throw ArithmeticException()
 }

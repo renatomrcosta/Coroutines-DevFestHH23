@@ -8,17 +8,17 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 
 private suspend fun fetchUserDetails(userId: String): String {
-    delay(200)
+    delay(300)
     return "Imagine some meaningful content we derive based on an User"
 }
 
 private suspend fun fetchUserPurchaseHistory(userId: String): List<Any> {
-    delay(200)
+    delay(300)
     return listOf()
 }
 
 private suspend fun compileUserPurchaseReport(userDetails: Any, purchaseHistory: List<Any>) {
-    delay(200)
+    delay(300)
 }
 
 suspend fun main() = withExecutionTime {

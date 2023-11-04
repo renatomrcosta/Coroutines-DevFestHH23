@@ -9,7 +9,7 @@ import com.xunfos.samples.withExecutionTime
 
 suspend fun mySuspendFunction() {
     println("Entering suspend function")
-    delay(200) // This is a suspended call
+    delay(300) // This is a suspended call
     println("Exiting suspend function")
 }
 

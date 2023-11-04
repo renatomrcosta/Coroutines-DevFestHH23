@@ -11,13 +11,13 @@ suspend fun main() {
 
     coroutineScope {
         launch {
-            delay(200)
-            launch { delay(200) }
+            delay(300)
+            launch { delay(300) }
             trace("Finished launch")
         }
 
         async {
-            delay(200)
+            delay(300)
             trace("Finished async")
             10
         }

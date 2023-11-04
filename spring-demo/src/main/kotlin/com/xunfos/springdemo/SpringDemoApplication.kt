@@ -1,9 +1,13 @@
 package com.xunfos.springdemo
 
 import io.reactivex.Observable
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.reactive.asFlow
+import kotlinx.coroutines.rx2.asFlow
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import org.springframework.data.mongodb.core.mapping.Document
+import org.springframework.data.repository.kotlin.CoroutineCrudRepository
 import org.springframework.data.repository.reactive.ReactiveCrudRepository
 import org.springframework.stereotype.Service
 import org.springframework.web.bind.annotation.GetMapping
@@ -28,19 +32,19 @@ class MyController(
     private val userPurchaseHistoryService: UserPurchaseHistoryService
 ) {
     @GetMapping("/")
-    fun listUsers(): Flux<UserDocument> {
+    suspend fun listUsers(): Flow<UserDocument> {
         return userRepository.findAll()
     }
 
     @GetMapping("/{id}")
-    fun getUser(@PathVariable id: String): Mono<UserDocument> {
+    suspend fun getUser(@PathVariable id: String): UserDocument {
         return userRepository.findById(id)
     }
 
     @GetMapping("/{id}/history")
     fun getUserPurchaseHistory(@PathVariable id: String): Flux<PurchaseHistory> {
-        val history = userPurchaseHistoryService.getHistoryReactor(userId = id)
-//        val history2 = userPurchaseHistoryService.getHistoryRxJava(userId = id)
+        val history = userPurchaseHistoryService.getHistoryReactor(userId = id).asFlow()
+        val history2 = userPurchaseHistoryService.getHistoryRxJava(userId = id).asFlow()
         return history
     }
 
@@ -58,9 +62,9 @@ class MyController(
 @Document
 data class UserDocument(val id: String, val name: String, val score: Int)
 
-interface UserRepository : ReactiveCrudRepository<UserDocument, String> {
-    fun findByName(name: String): Mono<UserDocument>
-    fun findAllByScoreGreaterThan(score: Int): Flux<UserDocument>
+interface UserRepository : CoroutineCrudRepository<UserDocument, String> {
+    suspend fun findByName(name: String): UserDocument
+    fun findAllByScoreGreaterThan(score: Int): Flow<UserDocument>
 }
 
 

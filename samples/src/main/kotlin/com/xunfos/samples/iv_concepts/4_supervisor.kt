@@ -9,14 +9,14 @@ import kotlinx.coroutines.supervisorScope
 suspend fun main() {
     supervisorScope {
         val future = async {
-            delay(200)
+            delay(300)
             error("Something went wrong")
             10
         }
 
         launch {
-            delay(200)
-            launch { delay(200) }
+            delay(300)
+            launch { delay(300) }
             trace("Finished launch")
         }
 
